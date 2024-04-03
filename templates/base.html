@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sovelluksesi Nimi</title>
+</head>
+<body>
+    <nav>
+        <a href="/login">Kirjaudu sisään</a>
+        <a href="/register">Rekisteröidy</a>
+    </nav>
+
+    {% block content %}
+    <form method="POST">
+        <!-- Registration form fields -->
+        <input type="submit" value="Register">
+    </form>
+    {% endblock %}
+
+</body>
+</html>
+

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Welcome to the ForumApp!</h1>
+    {% if current_user.is_authenticated %}
+        <p>Logged in as {{ current_user.id }}. <a href="/logout">Logout</a></p>
+    {% else %}
+        <p><a href="/login">Login</a></p>
+    {% endif %}
+</body>
+</html>
+

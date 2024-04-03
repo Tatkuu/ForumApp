@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- !DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to ForumApp</title>
+</head>
+<body>
+    <h1>Welcome to ForumApp</h1>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% if session['username'] %}
+        <p>Olet kirjautunut nimellä {{ session['username'] }}.</p>
+        <a href="/logout">Kirjaudu ulos</a>
+    {% else %}
+        <p>
+            <a href="/login">Login</a> | <a href="/register">Register</a>
+        </p>
+    {% endif %}
+</body>
+</html>
+-->
+<!--
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<form action="/login" method="POST">
+<p>Tunnus:<br>
+<input type="text" name="username"></p>
+<p>Salasana:<br>
+<input type="password" name="password"></p>
+<input type="submit" value="Kirjaudu">
+</form>
+{% endif %}
+-->

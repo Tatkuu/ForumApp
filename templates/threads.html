@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}Threads{% endblock %}
+{% block content %}
+    <h2>Threads</h2>
+    {% for thread in threads %}
+        <div>
+            <h3><a href="/threads/{{ thread.id }}">{{ thread.title }}</a></h3>
+            <p>Posted by {{ thread.user.username }} on {{ thread.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
+
