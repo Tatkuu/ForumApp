@@ -4,7 +4,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from models import Thread, Comment, User, db
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = getenv('DATABASE_URL', 'postgresql://postgres.gwgcixzhhbqwhqifqbaf:hR84vPLD#M52pj5@aws-0-eu-central-1.pooler.supabase.com:5432/postgres')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = getenv("SECRET_KEY")
 db.init_app(app)
@@ -21,9 +21,9 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         user = User.query.filter_by(username=username).first()
-
+        print(user.password)
         if user and check_password_hash(user.password, password):
-            session['user_id'] = user.id  # Tallenna käyttäjän id sessioniin
+            session['user_id'] = user.id
             flash('You were successfully logged in')
             return redirect(url_for("index"))
         else:
@@ -36,7 +36,6 @@ def register():
         username = request.form["username"]
         password = request.form["password"]
         user_exists = User.query.filter_by(username=username).first()
-
         if user_exists:
             flash('Username already exists')
             return redirect(url_for("register"))
@@ -99,25 +98,6 @@ def comment(thread_id):
     db.session.commit()
     return redirect(url_for('show_thread', thread_id=thread_id))
 
-
-#Vanha kommentointi
-'''@app.route('/threads/<int:thread_id>/comment', methods=['POST'])
-def comment(thread_id):
-    if 'user_id' not in session:
-        flash('Please log in to comment.')
-        return redirect(url_for('login'))
-
-    content = request.form.get('content')
-    user_id = session.get('user_id')
-
-    if not content:
-        flash('Content is required.')
-        return redirect(url_for('thread', thread_id=thread_id))
-
-    comment = Comment(content=content, thread_id=thread_id, user_id=user_id)
-    db.session.add(comment)
-    db.session.commit()
-    return redirect(url_for('threads'))'''
 
 @app.route('/comments/<int:comment_id>/delete', methods=['POST'])
 def delete_comment(comment_id):
