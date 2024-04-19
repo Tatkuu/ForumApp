@@ -2,13 +2,13 @@
 {% block title %}{{ thread.title }}{% endblock %}
 {% block content %}
     <h2>{{ thread.title }}</h2>
-    <p>Posted by {{ thread.user.username }} on {{ thread.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+    <p>Posted by {{ thread.username }} on {{ thread.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
     <div>
         <h3>Comments</h3>
         {% for comment in comments %}
             <div>
                 <p>{{ comment.content }}</p>
-                <p>Comment by {{ comment.user.username }} on {{ comment.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                <p>Comment by {{ comment.username }} on {{ comment.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
             </div>
         {% endfor %}
     </div>
