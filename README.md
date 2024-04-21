@@ -17,7 +17,7 @@ ForumApp is a web-based discussion platform that allows users to engage and star
 - Open your terminal and run the following command: git clone https://github.com/YourUsername/ForumApp.git
 ### 2. Set Up a Virtual Environment
 - In terminal run command: python3 -m venv venv
-source venv/bin/activate or alternatively on Windows use source venv\Scripts\activate
+- Next in terminal run: source venv/bin/activate or alternatively on Windows use source venv\Scripts\activate
 ### 3. Install Dependencies
 - pip install -r requirements.txt
 ### 4. Create a .env File
