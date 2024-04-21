@@ -3,7 +3,6 @@ from os import getenv
 from sqlalchemy import text
 from werkzeug.security import check_password_hash, generate_password_hash
 from models import db
-print("Database URL:", getenv('DATABASE_URL'))
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = getenv('DATABASE_URL', 'postgresql://postgres.gwgcixzhhbqwhqifqbaf:hR84vPLD#M52pj5@aws-0-eu-central-1.pooler.supabase.com:5432/postgres')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
