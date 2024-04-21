@@ -23,7 +23,7 @@ ForumApp is a web-based discussion platform that allows users to engage and star
 ### 4. Create .env File
 - Create .env file in the root directory of the project 
 - Open the .env file in a text editor and add the following lines:
-  - DATABASE_URL='postgres://postgres.gwgcixzhhbqwhqifqbaf:hR84vPLD#M52pj5@aws-0-eu-central-1.pooler.supabase.com:5432/postgres'
+  - DATABASE_URL=`postgres://postgres.gwgcixzhhbqwhqifqbaf:hR84vPLD#M52pj5@aws-0-eu-central-1.pooler.supabase.com:5432/postgres`
   - SECRET_KEY='your_secret_key'
 ### 5. Run the Application
 - In terminal run the following command: python3 app.py
