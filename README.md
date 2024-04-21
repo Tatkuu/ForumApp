@@ -14,19 +14,19 @@ ForumApp is a web-based discussion platform that allows users to engage and star
 
 ## Installation
 ### 1. Git clone the ForumApp repository
-Open your terminal and run the following command: git clone https://github.com/YourUsername/ForumApp.git
+- Open your terminal and run the following command: git clone https://github.com/YourUsername/ForumApp.git
 ### 2. Set Up a Virtual Environment
-python3 -m venv venv
+- In terminal run command: python3 -m venv venv
 source venv/bin/activate or alternatively on Windows use source venv\Scripts\activate
 ### 3. Install Dependencies
-pip install -r requirements.txt
+- pip install -r requirements.txt
 ### 4. Create a .env File
-Create .env file in the root directory of the project 
-Open the .env file in a text editor and add the following lines:
-DATABASE_URL='postgres://postgres.gwgcixzhhbqwhqifqbaf:hR84vPLD#M52pj5@aws-0-eu-central-1.pooler.supabase.com:5432/postgres'
-SECRET_KEY='your_secret_key'
+- Create .env file in the root directory of the project 
+- Open the .env file in a text editor and add the following lines:
+- DATABASE_URL='postgres://postgres.gwgcixzhhbqwhqifqbaf:hR84vPLD#M52pj5@aws-0-eu-central-1.pooler.supabase.com:5432/postgres'
+- SECRET_KEY='your_secret_key'
 ### 5. Run the Application
-python3 app.py
+- python3 app.py
 
 
 ### Update 1 (Välipalautus 2)
