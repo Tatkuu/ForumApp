@@ -2,23 +2,38 @@
 {% block title %}{{ thread.title }}{% endblock %}
 {% block content %}
     <h2>{{ thread.title }}</h2>
-    <p>Posted by {{ thread.username }} on {{ thread.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+    <p>Posted by User ID: {{ thread.user_id }} on {{ thread.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+
+    {% if session['user_id'] == thread.user_id %}
+        <form action="{{ url_for('threads.delete_thread', thread_id=thread.id) }}" method="post">
+            <input type="submit" value="Delete Thread">
+        </form>
+    {% endif %}
+
     <div>
         <h3>Comments</h3>
         {% for comment in comments %}
             <div>
                 <p>{{ comment.content }}</p>
-                <p>Comment by {{ comment.username }} on {{ comment.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                <p>Comment by User ID: {{ comment.user_id }} on {{ comment.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                {% if session['user_id'] == comment.user_id %}
+                    <form action="{{ url_for('threads.delete_comment', comment_id=comment.id) }}" method="post">
+                        <input type="submit" value="Delete Comment">
+                    </form>
+                {% endif %}
             </div>
         {% endfor %}
     </div>
+
     {% if session['user_id'] %}
         <div>
             <h3>Leave a comment</h3>
-            <form action="{{ url_for('comment', thread_id=thread.id) }}" method="post">
+            <form action="{{ url_for('threads.comment', thread_id=thread.id) }}" method="post">
                 <textarea name="content" required></textarea>
                 <input type="submit" value="Post Comment">
             </form>
         </div>
     {% endif %}
 {% endblock %}
+
+

@@ -8,13 +8,14 @@
     <header>
         <h1>Welcome to ForumApp</h1>
         <nav>
+            <a href="{{ url_for('index') }}">Home</a> 
             {% if session['user_id'] %}
-                <a href="/logout">Logout</a>
-                <a href="{{ url_for('new_thread') }}">Create new thread</a>
-                <a href="{{ url_for('threads') }}">Threads</a>
+                <a href="{{ url_for('auth.logout') }}">Logout</a>
+                <a href="{{ url_for('threads.new_thread') }}">Create new thread</a>
+                <a href="{{ url_for('threads.threads') }}">Threads</a>
             {% else %}
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
+                <a href="{{ url_for('auth.login') }}">Login</a>
+                <a href="{{ url_for('auth.register') }}">Register</a>
             {% endif %}
         </nav>
     </header>
@@ -26,3 +27,5 @@
     </footer>
 </body>
 </html>
+
+
