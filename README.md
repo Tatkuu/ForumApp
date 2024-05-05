@@ -7,9 +7,10 @@ ForumApp is a web-based discussion platform that allows users to engage and star
 - **Registration and Login:** Users can register their own accounts and log in to the application.
 - **Creating Threads:** Users can start a new thread.
 - **Posting Messages:** Users can reply to existing threads by posting messages.
-- **Database solution:** Database is implemented using SQL queries and supabase cloud services.
+- **Database Solution:** Database is implemented using SQL queries and supabase cloud services.
 - **Editing/Deleting Messages:** Users can edit or delete their own messages.
-- **Thread search:** Users can search threads.
+- **Thread Search:** Users can search threads.
+- **Thread List:** List of threads shows on the main page. 
 
 ## Installation
 ### 1. Git clone the ForumApp repository
