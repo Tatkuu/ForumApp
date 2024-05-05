@@ -8,7 +8,6 @@
     <header>
         <h1>Welcome to ForumApp</h1>
         <nav>
-            <a href="{{ url_for('index') }}">Home</a> 
             {% if session['user_id'] %}
                 <a href="{{ url_for('auth.logout') }}">Logout</a>
                 <a href="{{ url_for('threads.new_thread') }}">Create new thread</a>
@@ -17,15 +16,23 @@
                 <a href="{{ url_for('auth.login') }}">Login</a>
                 <a href="{{ url_for('auth.register') }}">Register</a>
             {% endif %}
-        </nav>
+        </nav>        
+        <p>Browse threads, join discussions, or start your own thread!</p>
+        <form action="{{ url_for('threads.search') }}" method="get">
+            <input type="text" name="query" placeholder="Search threads...">
+            <button type="submit">Search</button>
+        </form>
+        <p>To participate in discussions, create your own threads, or view existing threads, please register or login."</p>      
+
     </header>
     <hr>
     {% block content %}{% endblock %}
     <hr>
     <footer>
-
+        <p>© 2024 ForumApp. All rights reserved.</p>
     </footer>
 </body>
 </html>
+
 
 

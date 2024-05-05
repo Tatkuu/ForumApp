@@ -124,4 +124,17 @@ def delete_thread(thread_id):
         flash('You do not have permission to delete this thread.')
         return redirect(url_for('threads.threads'))
 
+@threads_blueprint.route('/search')
+def search():
+    search_term = request.args.get('query', '')
+    search_term = f"%{search_term}%"
+    sql = text("""
+        SELECT threads.id, threads.title, users.username, threads.created_at 
+        FROM threads
+        JOIN users ON threads.user_id = users.id
+        WHERE threads.title ILIKE :search
+        ORDER BY threads.created_at DESC;
+    """)
+    threads = db.session.execute(sql, {'search': search_term}).fetchall()
+    return render_template('search_results.html', threads=threads)
 

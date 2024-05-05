@@ -58,25 +58,3 @@ def logout():
     return redirect(url_for('index'))
 
 
-
-
-
-'''@auth_blueprint.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        sql = text("SELECT username FROM users WHERE username = :username")
-        result = db.session.execute(sql, {"username": username})
-        user_exists = result.fetchone()
-        if user_exists:
-            flash('Username already exists')
-            return redirect(url_for('auth.register'))
-        
-        hash_password = generate_password_hash(password)
-        sql = text("INSERT INTO users (username, password) VALUES (:username, :password)")
-        db.session.execute(sql, {"username": username, "password": hash_password})
-        db.session.commit()
-        flash('User successfully registered')
-        return redirect(url_for('auth.login'))
-    return render_template('register.html')'''

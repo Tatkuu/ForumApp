@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %}Search Results{% endblock %}
+{% block content %}
+    <h1>Search Results</h1>
+    {% if threads %}
+        <ul>
+            {% for thread in threads %}
+                <li>
+                    <h3><a href="{{ url_for('threads.show_thread', thread_id=thread.id) }}">{{ thread.title }}</a></h3>
+                    <p>By {{ thread.username }} on {{ thread.created_at }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No threads found matching your query.</p>
+    {% endif %}
+{% endblock %}
