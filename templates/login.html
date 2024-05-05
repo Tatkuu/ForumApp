@@ -2,12 +2,24 @@
 {% block title %}Login{% endblock %}
 {% block content %}
     <h2>Login</h2>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="errors">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
     <form action="{{ url_for('auth.login') }}" method="post">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
+        <input type="text" id="username" name="username" required>
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password">
+        <input type="password" id="password" name="password" required>
         <input type="submit" value="Login">
     </form>
 {% endblock %}
 
+
+git commit -m "Add error messages display on the same page for login and registration"

@@ -2,12 +2,30 @@
 {% block title %}Register{% endblock %}
 {% block content %}
     <h2>Register</h2>
+    <!-- Näyttää virheilmoitukset tai muut flash-viestit -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="errors">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
     <form action="{{ url_for('auth.register') }}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password">
-        <input type="submit" value="Register">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <input type="submit" value="Register">
+        </div>
     </form>
 {% endblock %}
+
 
