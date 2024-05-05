@@ -1,69 +1,25 @@
 {% extends "layout.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-{% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- !DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome to ForumApp</title>
-</head>
-<body>
-    <h1>Welcome to ForumApp</h1>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-
-    {% if session['username'] %}
-        <p>Olet kirjautunut nimellä {{ session['username'] }}.</p>
-        <a href="/logout">Kirjaudu ulos</a>
-    {% else %}
-        <p>
-            <a href="/login">Login</a> | <a href="/register">Register</a>
-        </p>
-    {% endif %}
-</body>
-</html>
--->
-<!--
-{% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
-<a href="/logout">Kirjaudu ulos</a>
-{% else %}
-<form action="/login" method="POST">
-<p>Tunnus:<br>
-<input type="text" name="username"></p>
-<p>Salasana:<br>
-<input type="password" name="password"></p>
-<input type="submit" value="Kirjaudu">
+<p>Browse threads, join discussions, or start your own thread!</p>
+<form action="{{ url_for('threads.search') }}" method="get">
+    <input type="text" name="query" placeholder="Search threads...">
+    <button type="submit">Search</button>
 </form>
-{% endif %}
--->
+<p>To participate in discussions, create your own threads, or view existing threads, please register or login.</p>
+<div>
+    <h2>Recent Discussion Threads</h2>
+    {% if threads %}
+        <ul>
+            {% for thread in threads %}
+                <li>
+                    <a href="{{ url_for('threads.show_thread', thread_id=thread.id) }}">{{ thread.title }}</a>
+                    <p>Posted by {{ thread.username }} on {{ thread.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No threads to display. Start a new discussion!</p>
+    {% endif %}
+</div>
+{% endblock %}

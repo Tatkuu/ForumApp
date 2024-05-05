@@ -16,7 +16,14 @@ app.register_blueprint(threads_blueprint, url_prefix='/threads')
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    sql = text("""
+        SELECT threads.id, threads.title, users.username, threads.created_at 
+        FROM threads
+        JOIN users ON threads.user_id = users.id
+        ORDER BY threads.created_at DESC;
+    """)
+    threads = db.session.execute(sql).fetchall()
+    return render_template('index.html', threads=threads)
 
 if __name__ == '__main__':
     with app.app_context():

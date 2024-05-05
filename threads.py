@@ -4,6 +4,8 @@ from models import db
 
 threads_blueprint = Blueprint('threads', __name__, template_folder='templates')
 
+
+
 @threads_blueprint.route('/new', methods=['GET', 'POST'])
 def new_thread():
     if 'user_id' not in session:
@@ -126,10 +128,6 @@ def edit_comment(comment_id):
             flash('Comment cannot be empty.')
 
     return render_template('edit_comment.html', comment=comment)
-
-
-
-
 
 
 @threads_blueprint.route('/<int:thread_id>/delete', methods=['POST'])
