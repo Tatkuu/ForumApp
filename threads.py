@@ -97,6 +97,37 @@ def delete_comment(comment_id):
         flash('You do not have permission to delete this comment.')
         return redirect(url_for('threads.threads'))
 
+@threads_blueprint.route('/comments/<int:comment_id>/edit', methods=['GET', 'POST'])
+def edit_comment(comment_id):
+    if 'user_id' not in session:
+        flash('Please log in to edit comments.')
+        return redirect(url_for('auth.login'))
+
+    comment_query = text("SELECT id, content, user_id, thread_id FROM comments WHERE id = :comment_id")
+    comment = db.session.execute(comment_query, {"comment_id": comment_id}).fetchone()
+
+    if comment is None:
+        flash('Comment not found.')
+        return redirect(url_for('threads.threads'))
+
+    if comment.user_id != session.get('user_id'):
+        flash('You do not have permission to edit this comment.')
+        return redirect(url_for('threads.threads'))
+
+    if request.method == 'POST':
+        new_content = request.form.get('content')
+        if new_content:
+            update_query = text("UPDATE comments SET content = :new_content WHERE id = :comment_id")
+            db.session.execute(update_query, {"new_content": new_content, "comment_id": comment_id})
+            db.session.commit()
+            flash('Comment updated successfully.')
+            return redirect(url_for('threads.show_thread', thread_id=comment.thread_id))
+        else:
+            flash('Comment cannot be empty.')
+
+    return render_template('edit_comment.html', comment=comment)
+
+
 
 
 

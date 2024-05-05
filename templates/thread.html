@@ -1,39 +1,35 @@
 {% extends "layout.html" %}
 {% block title %}{{ thread.title }}{% endblock %}
 {% block content %}
-    <h2>{{ thread.title }}</h2>
-    <p>Posted by User ID: {{ thread.user_id }} on {{ thread.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
-
-    {% if session['user_id'] == thread.user_id %}
-        <form action="{{ url_for('threads.delete_thread', thread_id=thread.id) }}" method="post">
-            <input type="submit" value="Delete Thread">
-        </form>
-    {% endif %}
-
+<h2>{{ thread.title }}</h2>
+<p>Posted by {{ thread.username }} on {{ thread.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+<div>
+    <h3>Comments</h3>
+    {% for comment in comments %}
     <div>
-        <h3>Comments</h3>
-        {% for comment in comments %}
-            <div>
-                <p>{{ comment.content }}</p>
-                <p>Comment by User ID: {{ comment.user_id }} on {{ comment.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
-                {% if session['user_id'] == comment.user_id %}
-                    <form action="{{ url_for('threads.delete_comment', comment_id=comment.id) }}" method="post">
-                        <input type="submit" value="Delete Comment">
-                    </form>
-                {% endif %}
-            </div>
-        {% endfor %}
+        <p>{{ comment.content }}</p>
+        <p>Comment by {{ comment.username }} on {{ comment.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+        {% if session.get('user_id') == comment.user_id %}
+        <a href="{{ url_for('threads.edit_comment', comment_id=comment.id) }}">Edit</a>
+        <form action="{{ url_for('threads.delete_comment', comment_id=comment.id) }}" method="post" style="display:inline;">
+            <button type="submit">Delete</button>
+        </form>
+        {% endif %}
     </div>
-
-    {% if session['user_id'] %}
-        <div>
-            <h3>Leave a comment</h3>
-            <form action="{{ url_for('threads.comment', thread_id=thread.id) }}" method="post">
-                <textarea name="content" required></textarea>
-                <input type="submit" value="Post Comment">
-            </form>
-        </div>
+    {% endfor %}
+    {% if session.get('user_id') %}
+    <div>
+        <h3>Leave a comment</h3>
+        <form action="{{ url_for('threads.comment', thread_id=thread.id) }}" method="post">
+            <textarea name="content" required></textarea>
+            <button type="submit">Post Comment</button>
+        </form>
+    </div>
+    {% else %}
+    <p><a href="{{ url_for('auth.login') }}">Log in</a> to post a comment.</p>
     {% endif %}
+</div>
 {% endblock %}
+
 
 
