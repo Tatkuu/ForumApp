@@ -38,7 +38,6 @@ def threads():
 @threads_blueprint.route('/<int:thread_id>')
 def show_thread(thread_id):
     try:
-        # Haetaan keskustelun tiedot
         thread_sql = text("SELECT id, title, user_id, created_at FROM threads WHERE id = :thread_id")
         thread_result = db.session.execute(thread_sql, {"thread_id": thread_id}).fetchone()
         
@@ -46,11 +45,9 @@ def show_thread(thread_id):
             flash('Thread not found')
             return redirect(url_for('threads.threads'))
 
-        # Haetaan kommentit keskusteluun
         comments_sql = text("SELECT id, content, user_id, created_at FROM comments WHERE thread_id = :thread_id ORDER BY created_at")
         comments_result = db.session.execute(comments_sql, {"thread_id": thread_id}).fetchall()
-        
-        # Välitetään tiedot templateen
+
         return render_template('thread.html', thread=thread_result, comments=comments_result)
     except Exception as e:
         flash(f'An error occurred: {str(e)}')
@@ -66,7 +63,7 @@ def comment(thread_id):
     
     content = request.form.get('content')
     user_id = session.get('user_id')
-    if content:  # Varmista, että kommentin sisältö on annettu
+    if content:
         try:
             sql = text("INSERT INTO comments (content, thread_id, user_id) VALUES (:content, :thread_id, :user_id)")
             db.session.execute(sql, {"content": content, "thread_id": thread_id, "user_id": user_id})
@@ -87,17 +84,22 @@ def delete_comment(comment_id):
         return redirect(url_for('auth.login'))
 
     comment_sql = text("SELECT user_id, thread_id FROM comments WHERE id = :comment_id")
-    comment = db.session.execute(comment_sql, {"comment_id": comment_id}).fetchone()
+    result = db.session.execute(comment_sql, {"comment_id": comment_id})
+    comment = result.first()
 
-    if comment and comment['user_id'] == session['user_id']:
+    if comment and comment[0] == session.get('user_id'):
         delete_sql = text("DELETE FROM comments WHERE id = :comment_id")
         db.session.execute(delete_sql, {"comment_id": comment_id})
         db.session.commit()
         flash('Comment deleted successfully.')
+        return redirect(url_for('threads.show_thread', thread_id=comment[1]))
     else:
         flash('You do not have permission to delete this comment.')
+        return redirect(url_for('threads.threads'))
 
-    return redirect(url_for('threads.show_thread', thread_id=comment['thread_id']))
+
+
+
 
 @threads_blueprint.route('/<int:thread_id>/delete', methods=['POST'])
 def delete_thread(thread_id):
@@ -106,9 +108,10 @@ def delete_thread(thread_id):
         return redirect(url_for('auth.login'))
 
     thread_sql = text("SELECT user_id FROM threads WHERE id = :thread_id")
-    thread = db.session.execute(thread_sql, {"thread_id": thread_id}).fetchone()
+    result = db.session.execute(thread_sql, {"thread_id": thread_id})
+    thread = result.first()
 
-    if thread and thread['user_id'] == session['user_id']:
+    if thread and thread[0] == session.get('user_id'):
         delete_comments_sql = text("DELETE FROM comments WHERE thread_id = :thread_id")
         db.session.execute(delete_comments_sql, {"thread_id": thread_id})
 
@@ -116,8 +119,9 @@ def delete_thread(thread_id):
         db.session.execute(delete_thread_sql, {"thread_id": thread_id})
         db.session.commit()
         flash('Thread deleted successfully.')
+        return redirect(url_for('threads.threads'))
     else:
         flash('You do not have permission to delete this thread.')
+        return redirect(url_for('threads.threads'))
 
-    return redirect(url_for('threads.threads'))
 
